@@ -4,7 +4,7 @@ namespace Coto;
 use Coto\SessionManager as Session;
 use Coto\User;
 
-class Authtenticator
+class Authtenticator implements AuthtenticatorInterface
 {
     protected $user;
     protected $session;
@@ -13,7 +13,7 @@ class Authtenticator
     {
         $this->session = $session;
     }
-    
+
     public function check()
     {
         return $this->user() != null;

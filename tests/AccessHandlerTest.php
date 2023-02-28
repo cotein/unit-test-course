@@ -1,20 +1,28 @@
 <?php
 
-use Coto\AccessHandler as Access;
 use Coto\Authtenticator;
-use Coto\SessionFileDriver;
 use Coto\SessionManager;
+use Coto\SessionFileDriver;
 use PHPUnit\Framework\TestCase;
+use Coto\AccessHandler as Access;
+use Coto\SessionArrayDriver;
+use Coto\Stubs\AuthtenticatorStub;
 
 class AccessHandlertest extends TestCase
 {
     public function test_grant_access()
     {
-        $driver = new SessionFileDriver();
+        /* $driver = new SessionArrayDriver([
+            'user_data' => [
+                'name' => 'Diego',
+                'role' => 'admin'
+            ]
+        ]);
 
-        $session = new SessionManager($driver);
+        $session = new SessionManager($driver); */
 
-        $auth = new Authtenticator($session);
+
+        $auth = new AuthtenticatorStub();
 
         $access = new Access($auth);
 
@@ -25,7 +33,12 @@ class AccessHandlertest extends TestCase
 
     public function test_deny_access()
     {
-        $driver = new SessionFileDriver();
+        $driver = new SessionArrayDriver([
+            'user_data' => [
+                'name' => 'Diego',
+                'role' => 'admin'
+            ]
+        ]);
 
         $session = new SessionManager($driver);
 

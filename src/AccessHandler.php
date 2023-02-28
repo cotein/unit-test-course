@@ -4,15 +4,9 @@ namespace Coto;
 
 class AccessHandler
 {
-    /**
-     * @var Coto\Authtenticator
-     */
     protected $auth;
 
-    /**
-     * @param Coto\Authtenticator $auth
-     */
-    public function __construct($auth)
+    public function __construct(AuthtenticatorInterface $auth)
     {
         $this->auth = $auth;
     }
