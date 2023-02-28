@@ -1,29 +1,35 @@
 <?php
 
 namespace Coto;
-use Coto\SessionManager;
+use Coto\SessionManager as Session;
 use Coto\User;
 
 class Authtenticator
 {
-    protected static $user;
+    protected $user;
+    protected $session;
 
-    public static function check()
+    public function __construct(Session $session)
     {
-        return static::user() != null;
+        $this->session = $session;
+    }
+    
+    public function check()
+    {
+        return $this->user() != null;
     }
 
-    public static function user()
+    public function user()
     {
-        if (static::$user) {
-            return static::$user;
+        if ($this->user) {
+            return $this->user;
         }
 
-        $data = SessionManager::get('user_data');
+        $data = $this->session->get('user_data');
 
         if ( ! is_null($data)) {
             
-            return static::$user = new User($data);
+            return $this->user = new User($data);
         }
 
         return null;

@@ -5,24 +5,27 @@ namespace Coto;
 
 class SessionManager
 {
-    protected static $data = [];
-    protected static $loaded = false;
+    protected $data = [];
+    protected $loaded = false;
+    protected $driver;
 
-    public static function load()
+    public function __construct(SessionFileDriver $driver)
     {
-        if (static::$loaded) return;
+        $this->driver = $driver;
 
-        static::$data = SessionFileDriver::load();
-
-        static::$loaded = true;
+        $this->load();
     }
 
-    public static function get($key)
+    public function load()
     {
-        static::load();
+        $this->data = $this->driver->load();
 
-        return isset(static::$data[$key])
-            ? static::$data[$key]
+    }
+
+    public function get($key)
+    {
+        return isset($this->data[$key])
+            ? $this->data[$key]
             : null;
     }
 }   

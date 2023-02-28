@@ -1,13 +1,25 @@
 <?php
 
 namespace Coto;
-use Coto\Authtenticator as Auth;
 
 class AccessHandler
 {
-    public static function check($role)
+    /**
+     * @var Coto\Authtenticator
+     */
+    protected $auth;
+
+    /**
+     * @param Coto\Authtenticator $auth
+     */
+    public function __construct($auth)
     {
-        return Auth::check() && Auth::user()->role == $role;
+        $this->auth = $auth;
+    }
+
+    public function check($role)
+    {
+        return $this->auth->check() && $this->auth->user()->role == $role;
     }
 }
 
